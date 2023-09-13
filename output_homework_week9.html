@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.14.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+</head>
+<body>
+  <div id="vis"/>
+  <script>
+    const spec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
+  "width": 400,
+  "height": 300,
+  "projection": {"type": "equirectangular"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/VICLGAtopojson.json",
+    "format": {"type": "topojson", "feature": "VICLGAgeojson"}
+  },
+  "encoding": {
+    "tooltip": [
+      {
+        "field": "properties.vic_lga__3",
+        "type": "nominal",
+        "title": "Local Government Area"
+      },
+      {
+        "field": "Developmentally vulnerable",
+        "type": "quantitative",
+        "title": "Developmentally vulnerable (%)"
+      }
+    ]
+  },
+  "layer": [
+    {"mark": {"type": "geoshape", "fill": "gainsboro", "stroke": "white"}},
+    {
+      "transform": [
+        {
+          "lookup": "properties.vic_lga__3",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/LGA%20score_2021_cleaned.csv"
+            },
+            "key": "LGA",
+            "fields": ["Developmentally vulnerable"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "color": {
+          "field": "Developmentally vulnerable",
+          "type": "quantitative",
+          "title": ["Development score"],
+          "scale": {
+            "type": "threshold",
+            "domain": [5, 10, 15, 20],
+            "range": ["#ffbaba", "#ff7b7b", "#ff0000", "#a70000", "#853229"]
+          }
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "legend": {"labelFont": "Arial", "titleFont": "Arial"},
+    "title": {"font": "Arial", "fontSize": 14, "fontWeight": 700}
+  }
+};
+    vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
+  </script>
+</body>
+</html>

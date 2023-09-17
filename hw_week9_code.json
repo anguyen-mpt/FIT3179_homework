@@ -1,22 +1,20 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
     "width": 400,
     "height": 300,
-    "projection": {
-      "type": "equirectangular"
-    },
+    "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
+    "projection": {"type": "equirectangular"},
     "data": {
-      "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/VICLGAtopojson.json",
+      "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/vic-lga-2019.json",
       "format": {
         "type": "topojson",
-        "feature": "VICLGAgeojson"
+        "feature": "vic-lga-2019"
       }
     },
     "encoding": {
       "tooltip": [
         {
-          "field": "properties.vic_lga__3",
+          "field": "properties.LGA_NAME19",
           "type": "nominal",
           "title": "Local Government Area"
         },
@@ -31,17 +29,17 @@
       {
         "mark": {
           "type": "geoshape",
-          "fill": "gainsboro",
-          "stroke": "white"
+          "fill": "lightgrey",
+          "stroke": "black"
         }
       },
       {
         "transform": [
           {
-            "lookup": "properties.vic_lga__3",
+            "lookup": "properties.LGA_NAME19",
             "from": {
               "data": {
-                "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/LGA%20score_2021_cleaned.csv"
+                "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/LGA%20score_2021_v4.csv"
               },
               "key": "LGA",
               "fields": [
@@ -58,7 +56,7 @@
             "field": "Developmentally vulnerable",
             "type": "quantitative",
             "title": [
-              "Development score"
+              "Percentage of children"
             ],
             "scale": {
               "type": "threshold",

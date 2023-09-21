@@ -1,84 +1,66 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "width": 400,
-    "height": 300,
-    "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
-    "projection": {"type": "equirectangular"},
-    "data": {
-      "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/vic-lga-2019.json",
-      "format": {
-        "type": "topojson",
-        "feature": "vic-lga-2019"
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 400,
+  "height": 300,
+  "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
+  "projection": {"type": "equirectangular"},
+  "data": {
+    "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/vic-lga-2019.json",
+    "format": {"type": "topojson", "feature": "vic-lga-2019"}
+  },
+  "encoding": {
+    "tooltip": [
+      {
+        "field": "properties.LGA_NAME19",
+        "type": "nominal",
+        "title": "Local Government Area:"
+      },
+      {
+        "field": "Developmentally vulnerable",
+        "type": "quantitative",
+        "title": "Proportion of children with vulnerable development (%):"
       }
-    },
-    "encoding": {
-      "tooltip": [
+    ]
+  },
+  "layer": [
+    {"mark": {"type": "geoshape", "fill": "lightgrey", "stroke": "black"}},
+    {
+      "transform": [
         {
-          "field": "properties.LGA_NAME19",
-          "type": "nominal",
-          "title": "Local Government Area"
-        },
-        {
+          "lookup": "properties.LGA_NAME19",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/LGA%20score_2021_v4.csv"
+            },
+            "key": "LGA",
+            "fields": ["Developmentally vulnerable"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "color": {
           "field": "Developmentally vulnerable",
           "type": "quantitative",
-          "title": "Developmentally vulnerable (%)"
-        }
-      ]
-    },
-    "layer": [
-      {
-        "mark": {
-          "type": "geoshape",
-          "fill": "lightgrey",
-          "stroke": "black"
-        }
-      },
-      {
-        "transform": [
-          {
-            "lookup": "properties.LGA_NAME19",
-            "from": {
-              "data": {
-                "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/LGA%20score_2021_v4.csv"
-              },
-              "key": "LGA",
-              "fields": [
-                "Developmentally vulnerable"
+          "title": ["Percentage of children"],
+          "scale": {
+            "type": "threshold",
+            "domain": [5, 10, 15, 20],
+            "range": [
+              "#fcbba1", 
+              "#fc9272", 
+              "#fb6a4a", 
+              "#de2d26", 
+              "#a50f15"
               ]
-            }
-          }
-        ],
-        "mark": {
-          "type": "geoshape"
-        },
-        "encoding": {
-          "color": {
-            "field": "Developmentally vulnerable",
-            "type": "quantitative",
-            "title": [
-              "Percentage of children"
-            ],
-            "scale": {
-              "type": "threshold",
-              "domain": [5,10,15,20],
-              "range": ["#ffbaba","#ff7b7b","#ff0000","#a70000","#853229"]
-            }
           }
         }
-      }
-    ],
-    "config": {
-      "view": {
-        "stroke": null
-      },
-      "legend": {
-        "labelFont": "Arial",
-        "titleFont": "Arial"
-      },
-      "title": {
-        "font": "Arial",
-        "fontSize": 14,
-        "fontWeight": 700
       }
     }
+  ],
+  "config": {
+    "view": {"stroke": null},
+    "legend": {"labelFont": "Roboto", "titleFont": "Roboto"},
+    "title": {"font": "Roboto", "fontSize": 15, "fontWeight": 700}
   }
+}

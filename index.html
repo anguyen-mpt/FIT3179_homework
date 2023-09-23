@@ -12,7 +12,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "width": 450,
   "height": 350,
-  "title": "Proportion of Victorian children with vulnerable development by LGA 2021",
+  "title": "Proportion of Victorian children with vulnerable development by Local Government Area 2021",
   "projection": {"type": "equirectangular"},
   "data": {
     "url": "https://raw.githubusercontent.com/anguyen-mpt/FIT3179_datavis2/main/data/vic-lga-2019.json",
@@ -65,7 +65,7 @@
   "config": {
     "view": {"stroke": null},
     "legend": {"labelFont": "Roboto", "titleFont": "Roboto"},
-    "title": {"font": "Roboto", "fontSize": 17, "fontWeight": 700}
+    "title": {"font": "Roboto", "fontSize": 15, "fontWeight": 700}
   }
 };
     vegaEmbed("#vis", spec, {mode: "vega-lite"}).then(console.log).catch(console.warn);
